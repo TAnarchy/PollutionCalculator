@@ -1,0 +1,349 @@
+
+<style>
+.container {
+  width: 500px;
+  clear: both;
+}
+
+.container input {
+  width: 100%;
+  clear: both;
+}
+#map {
+        height: 50%;
+        width: 50%;
+        clear: both;
+        left:550px;
+        top:-140px;
+      }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158061789-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-158061789-1');
+</script>
+<script>
+
+ var directionsService;
+ var directionsRenderer;
+ function initMap() {
+ 	//debugger;
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
+  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+  var mapOptions = {
+    zoom:7,
+    center: chicago
+  }
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  directionsRenderer.setMap(map);
+}
+
+function calcRoute() {
+  var start = document.getElementById('origin').value;
+  var end = document.getElementById('destination').value;
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  };
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+      directionsRenderer.setDirections(result);
+      
+    }
+  });
+  var service = new google.maps.DistanceMatrixService();
+  service.getDistanceMatrix(
+  {
+    origins: [start],
+    destinations: [end],
+    travelMode: 'DRIVING',
+    unitSystem: google.maps.UnitSystem.IMPERIAL
+  }, getDistance);
+
+
+  var changingTable= $('#myTable').DataTable();
+  //debugger;
+}
+function getDistance(response, status){
+  debugger;
+distance=response.rows[0].elements[0].distance.text
+numberDistance=distance.substring(0,distance.length-3)
+debugger;
+let plane_number=2.43
+let car_number=3.71
+let train_number=1.79
+let bus_number=0.56
+
+let people_traveling=document.getElementById("people_traveling").value
+
+document.getElementById("plane").value=(numberDistance*plane_number*people_traveling).toFixed(2)
+document.getElementById("car").value=carCalculator(numberDistance,car_number,people_traveling)
+document.getElementById("train").value=(numberDistance*train_number*people_traveling).toFixed(2)
+document.getElementById("bus").value=(numberDistance*bus_number*people_traveling).toFixed(2)
+  
+}
+
+function carCalculator(distance,number,people_travel)
+{
+  debugger;
+  if (people_travel<=4)
+  {
+    return (number*distance).toFixed(2)
+  }
+  else if(people_travel>4 && people_travel % 4 ==0 )
+  {
+    return ((number*distance*people_travel)/4).toFixed(2)
+  }
+  else if(people_travel>4 && people_travel%4!=0)
+  {
+    people_travel =parseInt(people_travel)+4-parseInt((people_travel%4))
+    return ((number*distance*people_travel)/4).toFixed(2)
+
+  }
+}
+
+function appendRow() {
+    var tbl = document.getElementById('myTable'), // table reference
+        row = tbl.insertRow(tbl.rows.length),      // append table row
+        i;
+    // insert table cells to the new row
+    for (i = 0; i < tbl.rows[0].cells.length; i++) {
+        createCell(row.insertCell(i), i, 'row');
+    }
+}
+ 
+// create DIV element and append to the table cell
+function createCell(cell, text, style) {
+    var div = document.createElement('div'), // create DIV element
+        txt = document.createTextNode(text); // create text node
+    div.appendChild(txt);                    // append text node to the DIV
+    div.setAttribute('class', style);        // set DIV class attribute
+    div.setAttribute('className', style);    // set DIV class attribute for IE (?!)
+    cell.appendChild(div);                   // append DIV to the table cell
+}
+  </script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=KEYHERE&callback=initMap"
+    async="false" defer></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <script>
+  $(document).ready(function(){
+<style>
+.container {
+  width: 500px;
+  clear: both;
+}
+
+.container input {
+  width: 100%;
+  clear: both;
+}
+#map {
+        height: 50%;
+        width: 50%;
+        clear: both;
+        left:550px;
+        top:-140px;
+      }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158061789-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-158061789-1');
+</script>
+<script>
+
+ var directionsService;
+ var directionsRenderer;
+ function initMap() {
+ 	//debugger;
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer();
+  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+  var mapOptions = {
+    zoom:7,
+    center: chicago
+  }
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  directionsRenderer.setMap(map);
+}
+
+function calcRoute() {
+  var start = document.getElementById('origin').value;
+  var end = document.getElementById('destination').value;
+  var request = {
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  };
+  directionsService.route(request, function(result, status) {
+    if (status == 'OK') {
+      directionsRenderer.setDirections(result);
+      
+    }
+  });
+  var service = new google.maps.DistanceMatrixService();
+  service.getDistanceMatrix(
+  {
+    origins: [start],
+    destinations: [end],
+    travelMode: 'DRIVING',
+    unitSystem: google.maps.UnitSystem.IMPERIAL
+  }, getDistance);
+
+
+  var changingTable= $('#myTable').DataTable();
+  //debugger;
+}
+function getDistance(response, status){
+  debugger;
+distance=response.rows[0].elements[0].distance.text
+numberDistance=distance.substring(0,distance.length-3)
+debugger;
+let plane_number=2.43
+let car_number=3.71
+let train_number=1.79
+let bus_number=0.56
+
+let people_traveling=document.getElementById("people_traveling").value
+
+document.getElementById("plane").value=(numberDistance*plane_number*people_traveling).toFixed(2)
+document.getElementById("car").value=carCalculator(numberDistance,car_number,people_traveling)
+document.getElementById("train").value=(numberDistance*train_number*people_traveling).toFixed(2)
+document.getElementById("bus").value=(numberDistance*bus_number*people_traveling).toFixed(2)
+  
+}
+
+function carCalculator(distance,number,people_travel)
+{
+  debugger;
+  if (people_travel<=4)
+  {
+    return (number*distance).toFixed(2)
+  }
+  else if(people_travel>4 && people_travel % 4 ==0 )
+  {
+    return ((number*distance*people_travel)/4).toFixed(2)
+  }
+  else if(people_travel>4 && people_travel%4!=0)
+  {
+    people_travel =parseInt(people_travel)+4-parseInt((people_travel%4))
+    return ((number*distance*people_travel)/4).toFixed(2)
+
+  }
+}
+
+function appendRow() {
+    var tbl = document.getElementById('myTable'), // table reference
+        row = tbl.insertRow(tbl.rows.length),      // append table row
+        i;
+    // insert table cells to the new row
+    for (i = 0; i < tbl.rows[0].cells.length; i++) {
+        createCell(row.insertCell(i), i, 'row');
+    }
+}
+ 
+// create DIV element and append to the table cell
+function createCell(cell, text, style) {
+    var div = document.createElement('div'), // create DIV element
+        txt = document.createTextNode(text); // create text node
+    div.appendChild(txt);                    // append text node to the DIV
+    div.setAttribute('class', style);        // set DIV class attribute
+    div.setAttribute('className', style);    // set DIV class attribute for IE (?!)
+    cell.appendChild(div);                   // append DIV to the table cell
+}
+  </script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=KEYHERE&callback=initMap"
+    async="false" defer></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <script>
+  $(document).ready(function(){
+    $("#submit_button").click(function(e) {
+        e.preventDefault();
+        
+        $("#map_frame").attr("src", "https://www.google.com");
+    })
+});
+  </script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<style src="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"></style>
+<script>
+	$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+<body>
+<div class="container">
+Origin (Address):              <input type="text" name="origin" id="origin" size=50/><br/>
+Destination (Address):          <input type="text" name="destination" id="destination" size=50><br/>
+Number of Travelers: <input type="text" name="people_traveling" id="people_traveling" size=2></br>
+<button id="submit_button" onclick="calcRoute()"> Submit</button>
+</div>
+<div>
+<div id="map"
+  width="600"
+  height="450"
+  frameborder="0" style="border:0;position:absolute; left:600px; top:0px">
+</iframe></div>
+<div class="container">
+Train CO2 kg/trip:              <input type="text" name="origin" id="train" size=50/><br/>
+Plane Co2 kg/trip:          <input type="text" name="destination" id="plane" size=50><br/>
+Car CO2 kg/trip: <input type="text" name="car" id="car" size=50></br>
+Motor Coach CO2 kg/trip: <input type="text" name="car" id="bus" size=50></br>
+
+</div>
+</body>
+    $("#submit_button").click(function(e) {
+        e.preventDefault();
+        
+        $("#map_frame").attr("src", "https://www.google.com");
+    })
+});
+  </script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<style src="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"></style>
+<script>
+	$(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+</script>
+<body>
+<div class="container">
+Origin (Address):              <input type="text" name="origin" id="origin" size=50/><br/>
+Destination (Address):          <input type="text" name="destination" id="destination" size=50><br/>
+Number of Travelers: <input type="text" name="people_traveling" id="people_traveling" size=2></br>
+<button id="submit_button" onclick="calcRoute()"> Submit</button>
+</div>
+<div>
+<div id="map"
+  width="600"
+  height="450"
+  frameborder="0" style="border:0;position:absolute; left:600px; top:0px">
+</iframe></div>
+<div class="container">
+Train CO2 kg/trip:              <input type="text" name="origin" id="train" size=50/><br/>
+Plane Co2 kg/trip:          <input type="text" name="destination" id="plane" size=50><br/>
+Car CO2 kg/trip: <input type="text" name="car" id="car" size=50></br>
+Motor Coach CO2 kg/trip: <input type="text" name="car" id="bus" size=50></br>
+
+</div>
+</body>
